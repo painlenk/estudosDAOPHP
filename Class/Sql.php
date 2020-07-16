@@ -4,15 +4,16 @@ class Sql extends PDO {
     private $conn;
 
     public function __construct(){
+        $dbPhp7SQLServer = "sqlsrv:Database=dbphp7;server=localhost\SQLEXPRESS1;ConnectionPooling=0". "sa". "253145";
     
-        $this->conn = new PDO("sqlsrv:Database=dbphp7;server=localhost\SQLEXPRESS1;ConnectionPooling=0", "sa", "253145");
+        $this->conn = new PDO($dbPhp7SQLServer);
         
         // metodo construtor inicia a classe ja conectando ao banco de dados , poderria passar as conecxões por parametros tambem
     }
 
-    private function setParams($statment, $parameters = array()){
+    private function setParams($statement, $parameters = array()){
         foreach ($parameters as $key => $value){
-            $this->setParam($statment, $key, $value);
+            $this->setParam($statement, $key, $value);
         }
         //metodo setParams recebe o statment e parameters 
         // e para cada elemento no parametro ele pega a chave e valor 
@@ -20,8 +21,8 @@ class Sql extends PDO {
 
     }
 
-    private function setParam($statment, $key, $value){
-        $statment->bindParam($statment, $key, $value);
+    private function setParam($statement, $key, $value){
+        $statement->bindParam( $key, $value);
         // o metodo setParam recebe cada um dos parametros contendo a chave e valor 
         // e entao realiza o bindParam de cada um
         // exemplo :ID, $id
