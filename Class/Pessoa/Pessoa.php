@@ -19,15 +19,11 @@ class Pessoa extends Usuario{
         
 
         if (count($results) > 0){ 
-            $row = $results[0];
+            $this->setData($results[0]);
             // em seguida ele verifica se a quantiadade de resultados e maior que 0
             //e atribui a variavel row o retorno do array no indice 0
 
-            $this->setIdusuario($row["idusuario"]);
-            $this->setDeslogin($row["deslogin"]);
-            $this->setDessenha($row["dessenha"]);
-            $this->setDtcadastro( new DateTime($row["dtcadastro"]));
-            $this->setCpf($row['cpf']);
+            
             // em seguida é setado os valores pelo methodo set onde e passado como parametros o array $row( que e o retorno da query) e passao a chave do array ( ou coluna do banco de dados onde esta a informação)
 
 
@@ -57,13 +53,11 @@ class Pessoa extends Usuario{
         ));
 
         if (count($results) > 0){
-            $row = $results[0];
+            
+            $this->setData($results[0]);
 
-            $this->setIdusuario($row['idusuario']);
-            $this->setDeslogin($row['deslogin']);
-            $this->setDessenha($row['dessenha']);
-            $this->setCpf($row['cpf']);
-            $this->setDtcadastro(new DateTime($row['dtcadastro']));
+
+            
         }else {
             throw new Exception("Error de Login", 1);
             
@@ -71,7 +65,42 @@ class Pessoa extends Usuario{
 
 
     }
+    public function setData($data){
 
+        $this->setIdusuario($data['idusuario']);
+            $this->setDeslogin($data['deslogin']);
+            $this->setDessenha($data['dessenha']);
+            $this->setCpf($data['cpf']);
+            $this->setDtcadastro(new DateTime($data['dtcadastro']));
+    }
+
+    public function insert(){
+        $sql = new Sql;
+
+        $results = $sql->select("EXECUTE sp_usuarios_insert(:LOGIN, :PASSWORD)", array(
+            ":LOGIN"=>$this->getDeslogin(),
+            ":PASSWORD"=>$this->getDessenha()
+        ));
+
+        if(count($results)> 0){
+            $this->setData($results[0]);
+        }
+    }
+
+    public function update($login, $password){
+        $sql = new Sql();
+        $this->setDeslogin($login);
+        $this->setDessenha($password);
+        
+
+        $sql->query("UPDATE tb_usuarios SET deslogin = :DESLOGIN , dessenha = :PASSWORD WHERE idusuario = :ID  ",array (
+            ":DESLOGIN"=>$this->getDeslogin(),
+            "PASSWORD"=>$this->getDessenha(),
+            ":ID"=>$this->getIdusuario(),
+
+        ));
+
+    }
     public function __toString(){
         // em seguida o methodo magico transforma o array pra exibição 
 

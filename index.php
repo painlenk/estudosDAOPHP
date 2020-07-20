@@ -38,9 +38,26 @@ echo json_encode($teste2);
 
 //--------------------
 //pesquisa por login e senha
-$pedro = new Pessoa();
-$pedro->login("pedro","1234566");
-echo $pedro;
+// $pedro = new Pessoa();
+// $pedro->login("pedro","123456");
+// echo $pedro;
+
+//-------------
+// insert
+// $aluno= new Usuario();
+// $aluno->setDeslogin("silvana");
+// $aluno->setDessenha("051430");
+// $aluno->insert();
+// echo $aluno;
+
+// utilizando o update;
+
+$teste2 = new Pessoa();
+$teste2->loadById(10);
+$teste2->update("Teste3", "12345");
+echo $teste2;
+
+
 
 
 

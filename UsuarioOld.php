@@ -106,7 +106,7 @@
         public function insert(){
             $sql = new Sql;
     
-            $results = $sql->select("EXECUTE sp_usuarios_insert :LOGIN, :PASSWORD", array(
+            $results = $sql->select("EXECUTE sp_usuarios_insert(:LOGIN, :PASSWORD)", array(
                 ":LOGIN"=>$this->getDeslogin(),
                 ":PASSWORD"=>$this->getDessenha()
             ));
@@ -130,3 +130,7 @@
         }
 
     }
+
+
+
+?>
