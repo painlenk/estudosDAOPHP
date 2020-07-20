@@ -52,11 +52,17 @@ echo json_encode($teste2);
 
 // utilizando o update;
 
+// $teste2 = new Pessoa();
+// $teste2->loadById(10);
+// $teste2->update("Teste3", "12345");
+// echo $teste2;
+
+// utilizando o DELETE
+
 $teste2 = new Pessoa();
 $teste2->loadById(10);
-$teste2->update("Teste3", "12345");
+$teste2->delete();
 echo $teste2;
-
 
 
 

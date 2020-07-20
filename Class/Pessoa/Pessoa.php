@@ -91,14 +91,30 @@ class Pessoa extends Usuario{
         $sql = new Sql();
         $this->setDeslogin($login);
         $this->setDessenha($password);
+        // enviado para o atributo deslogin e dessenha os novos login e senha recebidos como parametros
         
 
         $sql->query("UPDATE tb_usuarios SET deslogin = :DESLOGIN , dessenha = :PASSWORD WHERE idusuario = :ID  ",array (
+            // realizado a query 
             ":DESLOGIN"=>$this->getDeslogin(),
             "PASSWORD"=>$this->getDessenha(),
             ":ID"=>$this->getIdusuario(),
+            // os atributos deslogin e senhas serão agora os valores que foram setados pelo setters recebidos como parametros e lidos pelos getters 
 
         ));
+
+        
+
+    }
+
+    public function delete() {
+        $sql = new Sql();
+
+        $sql->query("DELETE FROM tb_usuarios WHERE idusuario = :ID", array(
+            ":ID"=>$this->getIdusuario(),
+        ));
+
+        $this->setData(null);
 
     }
     public function __toString(){
